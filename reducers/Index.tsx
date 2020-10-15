@@ -1,10 +1,15 @@
 import { configureStore,combineReducers, applyMiddleware, createStore, compose } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
 
 import reducer from './userReducer'
 
+const customizedMiddleware = getDefaultMiddleware({
+  serializableCheck: false
+})
+
 let store = configureStore({
-    reducer: combineReducers({reducer})
+    reducer: combineReducers({reducer}),
+    middleware: customizedMiddleware
   })
 
 export default store;

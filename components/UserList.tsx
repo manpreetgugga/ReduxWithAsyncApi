@@ -1,43 +1,57 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'react-native-axios';
-import { ActivityIndicator, Text, View} from 'react-native';
-
 import { actions } from '../reducers/userReducer'
-
-
-
+import { ActivityIndicator, Text, View} from 'react-native';
+import { deleteUser, userCreatePost, userList, userListWithQueryParam} from '../services/ApplicationApis' 
+import { fetchRequestConfig, hitServer, defaultState } from '../services/ApiHelper' 
 export  class UserList extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = {
-        isLoading : true,
-        error: '',
-        data : 'initial text'
-    }
+    this.state = defaultState
   }  
 
   fetchUsersList (props)  {
-    setTimeout(function(){
-        console.log('fetch')
-        props.loading()
-        console.log(actions.isLoadingState)
-    
-        axios.get('https://reqres.in/api/users?page=2')
-        .then(response => {
-            console.log('complete')
-            props.complete(JSON.stringify(response))
-        })
-        .catch(error => {
-            console.log('fail')
-            props.loading(error)
-        });
-    }, 3000);
-  }
 
-  componentDidMount() {
+       // Simple Get request
+      hitServer(fetchRequestConfig(userList),props)
+
+      // Simple Get request with query
+      // userListWithQueryParam.queryParams = {page :"12"}
+      // hitServer(fetchRequestConfig(userListWithQueryParam),props)
+
+      // Simple Post Request
+      // userCreatePost.requestBody = {name:"Manpreet",job:"Android"}
+      // hitServer(fetchRequestConfig(userCreatePost),props)
+
+      // deleteUser.requestPath += '678'
+      // hitServer(fetchRequestConfig(deleteUser),props)
+
+      // Simple Put Request
+      // userUpdatePut.requestPath += '633'
+      // userUpdatePut.requestBody = {name:"MMMMManpreet singH",job:"Android"}
+      // hitServer(fetchRequestConfig(userUpdatePut),props)
+  
+    // setTimeout(function(){
+    //     console.log('fetch')
+    //     props.loading()
+    //     console.log(actions.isLoadingState)
+
+    
+    //     axios.get('https://reqres.in/api/users?page=2')
+    //     .then(response => {
+    //         console.log('complete')
+    //         props.complete(JSON.stringify(response))
+    //     })
+    //     .catch(error => {
+    //         console.log('fail')
+    //         props.loading(error)
+    //     });
+    // }, 3000);
+    }
+  
+ componentDidMount() {
     console.log('mount')  
     this.fetchUsersList (this.props)
   }

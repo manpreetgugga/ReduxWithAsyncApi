@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 interface DataState {
   isLoading: boolean,
   error:string,
-  data:string
+  data:any
 }
 
-const initialState: DataState = { isLoading:true,error:'',data:'' }
+const initialState: DataState = { isLoading:true , error:'', data:'' }
 
 const userListSlice = createSlice({
                        name : 'userList',
@@ -19,7 +19,7 @@ const userListSlice = createSlice({
                          onFetchComplete(state,action){
                            console.log('complete...'+JSON.stringify(action))
                            state.isLoading = false
-                           state.data = JSON.stringify(action) 
+                           state.data = JSON.stringify(action.payload.data) 
                          },
                          onFetchError(state,action){
                            console.log('fail...')
